@@ -23,7 +23,15 @@ export class LoginComponent {
         next: () => {
           this._router.navigate(['user-infos']);
         },
-        error: () => {  }
+        error: (error) => {
+          const UNAUTHORIZED_RESPONSE_ERROR = 401;
+
+          if(error.status == UNAUTHORIZED_RESPONSE_ERROR) {
+            this.loginForm.setErrors( { 'invalidCredentials': true } );
+          } else {
+            this.loginForm.setErrors( { generalCredentialsError: true } );
+          }
+         }
     });
   }
 }
