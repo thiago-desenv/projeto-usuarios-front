@@ -21,7 +21,11 @@ export class UserInfosComponent {
 
   updateUser() {
     this._updateUserService.updateUser(
-      this.userInfosForm.value.name ?? '', this.userInfosForm.value.email ?? '',
-      this.userInfosForm.value.username ?? '', this.userInfosForm.value.password ?? '').subscribe();
+      this.userInfosForm.value as any).subscribe({
+        next: () => {
+          console.log('Dados atualizados.');
+        },
+        error: () => {}
+      });
   }
 }
