@@ -23,9 +23,11 @@ export class UserInfosComponent {
     this._updateUserService.updateUser(
       this.userInfosForm.value as any).subscribe({
         next: () => {
-          console.log('Dados atualizados.');
+          this.userInfosForm.setErrors({ 'update-success': true });
         },
-        error: () => {}
+        error: () => {
+          this.userInfosForm.setErrors({ 'update-error': true });
+        }
       });
   }
 }

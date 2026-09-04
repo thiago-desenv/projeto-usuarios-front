@@ -53,6 +53,19 @@
                     <button class="user-infos__delete-button">X</button>
                 </div>
             </div> -->
+
+            <div class="user-infos__alert-message">
+              @if(userInfosForm.invalid) {
+                @if(userInfosForm.hasError('update-success')) {
+                  <p class="poppins-semibold user-infos__alert-message--success">Atualizações realizadas com sucesso.</p>
+                }
+
+                @if(userInfosForm.hasError('update-error')) {
+                  <p class="poppins-semibold user-infos__alert-message--error">Erro ao atualizar informações.</p>
+                }
+              }
+            </div>
+
             <div class="user-infos__buttons-container">
                 <button type="button" class="poppins-regular user-infos__send-button user-infos__send-button--create">Criar Usuário</button>
                 <button (click)="updateUser()" type="button" class="poppins-regular user-infos__send-button user-infos__send-button--update">Atualizar Existente</button>
