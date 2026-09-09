@@ -8,10 +8,23 @@ import { map, Observable } from 'rxjs';
 export class UpdateUserService {
   private readonly _httpClient = inject(HttpClient);
 
+  authorization: string = 'authorization';
+
   updateUser(userInfos: { name: string, email: string, username: string, password: string }): Observable<{ message: string, token: string }> {
-    const headers = new HttpHeaders().set('authorization', `Bearer ${localStorage.getItem('token')!}`);
+    const headers = new HttpHeaders().set(this.authorization, `Bearer ${localStorage.getItem('token')!}`);
 
     return this._httpClient.put<{ message: string, token: string }>('http://localhost:3000/update-user', { userInfos }, { headers }).pipe(
+      map((response) => {
+        localStorage.setItem('token', response.token);
+        return response;
+      })
+    );
+  }
+
+  createUser(userInfos: { name: string, email: string, username: string, password: string }): Observable<{ message: string }> {
+    const headers = new HttpHeaders().set(this.authorization, `Bearer ${localStorage.getItem('token')!}`);
+
+    return this._httpClient.post<{ message: string, token: string }>('http://localhost:3000/create-user', { userInfos }, { headers }).pipe(
       map((response) => {
         localStorage.setItem('token', response.token);
         return response;

@@ -30,4 +30,12 @@ export class UserInfosComponent {
         }
       });
   }
+
+  createUser() {
+    this._updateUserService.createUser(this.userInfosForm.value as any).subscribe({
+      next: (value) => {
+        console.log('Valorzin', value);
+      }
+    });
+  }
 }
