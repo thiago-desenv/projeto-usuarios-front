@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { IUserRequest } from '../interfaces/user-request.interface';
+import { ICreateUserResponse } from '../interfaces/create-user-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,9 @@ export class CreateUserService {
 
   authorization: string = 'authorization';
 
-  createUser(newUser: { name: string; email: string; username: string; password: string; }): Observable<{ message: string }> {
+  createUser(newUser: IUserRequest): Observable<ICreateUserResponse> {
     const headers = new HttpHeaders().set(this.authorization, `Bearer ${localStorage.getItem('token')!}`);
 
-    return this._httpClient.post<{ message: string }>('http://localhost:3000/create-user', { newUser }, { headers });
+    return this._httpClient.post<ICreateUserResponse>('http://localhost:3000/create-user', { newUser }, { headers });
   }
 }

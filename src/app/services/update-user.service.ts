@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { IUpdateUserResponse } from '../interfaces/update-user-response.interface';
+import { IUserRequest } from '../interfaces/user-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +12,10 @@ export class UpdateUserService {
 
   authorization: string = 'authorization';
 
-  updateUser(userInfos: { name: string, email: string, username: string, password: string }): Observable<{ message: string, token: string }> {
+  updateUser(userInfos: IUserRequest): Observable<IUpdateUserResponse> {
     const headers = new HttpHeaders().set(this.authorization, `Bearer ${localStorage.getItem('token')!}`);
 
-    return this._httpClient.put<{ message: string, token: string }>('http://localhost:3000/update-user', { userInfos }, { headers }).pipe(
+    return this._httpClient.put<IUpdateUserResponse>('http://localhost:3000/update-user', { userInfos }, { headers }).pipe(
       map((response) => {
         localStorage.setItem('token', response.token);
         return response;
