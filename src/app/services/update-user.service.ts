@@ -13,9 +13,7 @@ export class UpdateUserService {
   authorization: string = 'authorization';
 
   updateUser(userInfos: IUserRequest): Observable<IUpdateUserResponse> {
-    const headers = new HttpHeaders().set(this.authorization, `Bearer ${localStorage.getItem('token')!}`);
-
-    return this._httpClient.put<IUpdateUserResponse>('http://localhost:3000/update-user', { userInfos }, { headers }).pipe(
+    return this._httpClient.put<IUpdateUserResponse>('http://localhost:3000/update-user', { userInfos }).pipe(
       map((response) => {
         localStorage.setItem('token', response.token);
         return response;

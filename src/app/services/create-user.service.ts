@@ -13,8 +13,6 @@ export class CreateUserService {
   authorization: string = 'authorization';
 
   createUser(newUser: IUserRequest): Observable<ICreateUserResponse> {
-    const headers = new HttpHeaders().set(this.authorization, `Bearer ${localStorage.getItem('token')!}`);
-
-    return this._httpClient.post<ICreateUserResponse>('http://localhost:3000/create-user', { newUser }, { headers });
+    return this._httpClient.post<ICreateUserResponse>('http://localhost:3000/create-user', { newUser });
   }
 }
