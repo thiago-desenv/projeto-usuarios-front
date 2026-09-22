@@ -12,16 +12,17 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent {
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    username: new FormControl('kuririn'),
+    password: new FormControl('kuririn10'),
   });
 
   private readonly _router = inject(Router);
   private readonly _loginService = inject(LoginService);
   onLogin() {
     this._loginService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
-        next: () => {
-          this._router.navigate(['user-infos']);
+        next: (response) => {
+          console.log('Subscribe Event Http Response Body', response);
+          // this._router.navigate(['user-infos']);
         },
         error: (error) => {
           const UNAUTHORIZED_RESPONSE_ERROR = 401;
