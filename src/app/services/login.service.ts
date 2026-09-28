@@ -1,7 +1,7 @@
 import { ILoginResponse } from './../interfaces/login-response.interface';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { AUTH_TOKEN_ENABLED } from '../interceptors/auth.interceptor';
 
 @Injectable({
@@ -15,6 +15,9 @@ export class LoginService {
       map((tokenResponse) => {
         localStorage.setItem('token', tokenResponse.token);
         return tokenResponse;
+      }),
+      catchError((error) => {
+        return throwError(() => error);
       })
     );
   }

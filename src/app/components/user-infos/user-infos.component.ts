@@ -4,6 +4,7 @@ import { UpdateUserService } from '../../services/update-user.service';
 import { CreateUserService } from '../../services/create-user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUserRequest } from '../../interfaces/user-request.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-infos',
@@ -23,6 +24,8 @@ export class UserInfosComponent {
   private readonly _updateUserService = inject(UpdateUserService);
   private readonly _createUserService = inject(CreateUserService);
 
+  private readonly _router = inject(Router);
+
   updateUser() {
     this._updateUserService.updateUser(
       this.userInfosForm.value as IUserRequest).subscribe({
@@ -41,6 +44,10 @@ export class UserInfosComponent {
         this.userInfosForm.setErrors({ 'create-user-success': true });
       },
       error: (error: HttpErrorResponse) => {
+        if(error.message.includes('Token não encontrado')) {
+          this._router.navigate(['/']);
+        }
+
         const ALREADY_EXISTING_USER = error.status === 409;
         if(ALREADY_EXISTING_USER) {
           return this.userInfosForm.setErrors({ 'existing-user-error': true });
