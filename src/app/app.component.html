@@ -1,5 +1,9 @@
 <router-outlet></router-outlet>
 
-<div class="spinner-container">
-  <div class="spinner"></div>
-</div>
+@if(_loadingService.loading$ | async) {
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+}
+
+
